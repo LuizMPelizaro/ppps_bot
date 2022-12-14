@@ -1,5 +1,6 @@
 import asyncio
 import os
+from app.utils.condition_utils import ConditionUtils
 from app.utils.date_time_utils import get_current_time
 
 import discord
@@ -20,10 +21,6 @@ client = discord.Client(intents=intents)
 async def on_ready():
     print(f"{get_current_time()} :: Logged in as {bot.user}!")
 
-    # Syncing the slash commands to all guilds
-    synced = await bot.tree.sync()
-    print(f"{get_current_time()} :: Synced {len(synced)} slash commands!")
-
 
 async def load():
     # Listing all files inside `app/commands/infos`
@@ -32,6 +29,23 @@ async def load():
         if file_name.endswith(".py"):
             # Registering the class as a slash command
             await bot.load_extension(f'app.commands.infos.{file_name[:-3]}')
+
+
+@bot.command(name="sync")
+async def sync(ctx):
+    # Check if the author is mine (zvinniie#0484)
+    if ctx.author.id == 240216596075773952:
+
+        # Check if it's not syncing
+        if not ConditionUtils.is_async:
+            ConditionUtils.is_async = True
+
+            synced = await bot.tree.sync()
+
+            print(f"{get_current_time()} :: Synced {len(synced)} slash commands!")
+            await ctx.send(f"👍 **`{len(synced)}` slash commands synced!**")
+
+            ConditionUtils.is_async = False
 
 
 async def main():
