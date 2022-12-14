@@ -1,3 +1,3 @@
 class ConditionUtils:
 
-    is_async = False
+    is_syncing = False

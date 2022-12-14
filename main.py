@@ -37,15 +37,15 @@ async def sync(ctx):
     if ctx.author.id == 240216596075773952:
 
         # Check if it's not syncing
-        if not ConditionUtils.is_async:
-            ConditionUtils.is_async = True
+        if not ConditionUtils.is_syncing:
+            ConditionUtils.is_syncing = True
 
             synced = await bot.tree.sync()
 
             print(f"{get_current_time()} :: Synced {len(synced)} slash commands!")
             await ctx.send(f"👍 **`{len(synced)}` slash commands synced!**")
 
-            ConditionUtils.is_async = False
+            ConditionUtils.is_syncing = False
 
 
 async def main():
