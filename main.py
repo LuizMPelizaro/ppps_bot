@@ -9,7 +9,6 @@ config = dotenv_values(".env")
 token = config.get("TOKEN")
 
 intents = discord.Intents.all()
-intents.message_content = True
 
 bot = commands.Bot(command_prefix="--", intents=intents)
 client = discord.Client(intents=intents)
