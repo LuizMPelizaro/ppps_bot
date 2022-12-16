@@ -15,7 +15,11 @@ class Sync(commands.Cog):
                 if not ConditionUtils.is_syncing:
                     ConditionUtils.is_syncing = True
 
+                    message = await ctx.send(":hourglass_flowing_sand: **Syncing commands...**")  # :hourglass:
+
                     synced = await bot.tree.sync()
+
+                    await message.delete()
 
                     print(f"{get_current_time()} :: Synced {len(synced)} slash commands!")
                     await ctx.send(f"👍 **`{len(synced)}` slash commands synced!**")
