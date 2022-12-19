@@ -1,12 +1,12 @@
 import asyncio
 import os
-from app.utils.date_time_utils import get_current_time
+from app.utils.date_time_utils import DateTimeUtils
+from app.utils.list_utils import ListUtils
 import discord
 from discord.ext import commands
-from dotenv import dotenv_values
+from app.config.config import Config
 
-config = dotenv_values(".env")
-token = config.get("TOKEN")
+token = Config.get_env("TOKEN")
 
 intents = discord.Intents.all()
 
@@ -16,15 +16,16 @@ client = discord.Client(intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f"{get_current_time()} :: Logged in as {bot.user}!")
+    print(f"{DateTimeUtils.get_current_time()} :: Logged in as {bot.user}!")
+    ListUtils.extract_users_id()
 
 
 async def load_commands():
-    print(f"{get_current_time()} :: Loading commands")
-    # Listing all files inside `app/commands`
-    for base_dir_name in os.listdir("./app/commands"):
+    print(f"{DateTimeUtils.get_current_time()} :: Loading commands")
+    # Listing all files inside `src/commands`
+    for base_dir_name in os.listdir("app/commands"):
         # Listing all files inside the respective directory
-        for file_name in os.listdir(f"./app/commands/{base_dir_name}"):
+        for file_name in os.listdir(f"app/commands/{base_dir_name}"):
             # Checking if it is a python file
             if file_name.endswith(".py"):
                 # Registering the class as a slash command
@@ -32,9 +33,9 @@ async def load_commands():
 
 
 async def load_events():
-    print(f"{get_current_time()} :: Loading events")
+    print(f"{DateTimeUtils.get_current_time()} :: Loading events")
     # Listing all files inside the respective directory
-    for file_name in os.listdir("./app/events"):
+    for file_name in os.listdir("app/events"):
         # Checking if it is a python file
         if file_name.endswith(".py"):
             # Registering the class as an event

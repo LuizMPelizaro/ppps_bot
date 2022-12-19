@@ -1,15 +1,16 @@
 from discord.ext import commands
 
 from app.utils.condition_utils import ConditionUtils
-from app.utils.date_time_utils import get_current_time
+from app.utils.date_time_utils import DateTimeUtils
+from app.utils.list_utils import ListUtils
 
 
 class Sync(commands.Cog):
     def __init__(self, bot: commands.Bot):
         @bot.command(name="sync")
         async def sync(ctx):
-            # Check if the author is me (zvinniie#0484)
-            if ctx.author.id == 240216596075773952:
+            # Check if the author is on permitted users to sync (zvinniie#0484 and Biig Hause #4537 are indispensable)
+            if str(ctx.author.id) in ListUtils.get_users_id():
 
                 # Check if it's not syncing
                 if not ConditionUtils.is_syncing:
@@ -21,8 +22,8 @@ class Sync(commands.Cog):
 
                     await message.delete()
 
-                    print(f"{get_current_time()} :: Synced {len(synced)} slash commands!")
-                    await ctx.send(f"👍 **`{len(synced)}` slash commands synced!**")
+                    print(f"{DateTimeUtils.get_current_time()} :: Synced {len(synced)} slash commands!")
+                    await ctx.send(f"👍 **__{len(synced)}__ slash commands synced!**")
 
                     ConditionUtils.is_syncing = False
 
