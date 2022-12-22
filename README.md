@@ -18,8 +18,7 @@ A simple music bot project. Our goal is make a simple and efficiently music bot 
 ```
 
 * Python >= 3.7v
-* PIP
-* pip install -r requirements.txt
+* pip
 
 ```   
 
@@ -41,7 +40,8 @@ List of environment variables required to start the application. (Obs: An exampl
 
 To execute the application:
 ```
-python main.py
+* pip install -r requirements.txt (Only first time executing it)
+* python main.py
 ```
 
 ### Tests
