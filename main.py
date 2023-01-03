@@ -18,6 +18,7 @@ client = discord.Client(intents=intents)
 async def on_ready():
     print(f"{DateTimeUtils.get_current_time()} :: Logged in as {bot.user}!")
     ListUtils.extract_users_id()
+    DateTimeUtils.set_started_at()
 
 
 async def load_commands():
